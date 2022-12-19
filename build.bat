@@ -5,7 +5,7 @@ cd C:\mnt
 set platf=Win32
 set builddir=c:\mnt\PCBuild
 set outdir=c:\mnt\build-out
-set py_version=3.8.14
+set py_version=3.8.16
 
 mkdir %outdir%
 if not exist %outdir% exit /b 3
