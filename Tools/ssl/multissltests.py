@@ -46,10 +46,11 @@ log = logging.getLogger("multissl")
 OPENSSL_OLD_VERSIONS = [
     "1.0.2u",
     "1.1.0l",
+    "1.1.1k",
 ]
 
 OPENSSL_RECENT_VERSIONS = [
-    "1.1.1n",
+    "1.1.1s",
     "3.0.1"
 ]
 
