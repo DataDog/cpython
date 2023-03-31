@@ -1,0 +1,60 @@
+stages:
+  - binary_build
+  - deploy
+
+variables:
+  PYTHON_VERSION: "3.9.16"
+
+.manual:
+  - when: manual
+    allow_failure: true
+
+.build_common:
+  stage: binary_build
+  tags: ["runner:windows-docker", "windowsversion:1809"]
+  variables:
+    ARCH: "x64"
+    DATADOG_AGENT_WINBUILDIMAGES: v8339702-f91ff4f
+  script:
+    - $ErrorActionPreference = "Stop"
+    - '$_instance_id = (iwr  -UseBasicParsing http://169.254.169.254/latest/meta-data/instance-id).content ; Write-Host "Running on instance $($_instance_id)"'
+    - if (Test-Path build-out) { remove-item -recurse -force build-out }
+    - docker run --rm -v "$(Get-Location):c:\mnt" -e CI_JOB_ID=${CI_JOB_ID} -e WINDOWS_BUILDER=true -e AWS_NETWORKING=true -e TARGET_ARCH="$ARCH" datadog/agent-buildimages-windows_x64:1809 C:\mnt\build.bat
+    - get-childitem build-out
+    - Get-FileHash -Algorithm SHA256 build-out/python-windows-${PYTHON_VERSION}-${ARCH}.zip
+  artifacts:
+    expire_in: 2 weeks
+    paths:
+      - build-out/python-windows-${PYTHON_VERSION}-${ARCH}.zip
+
+build_binaries_x64:
+  extends: .build_common
+  variables:
+    ARCH: "x64"
+
+build_binaries_x86:
+  extends: .build_common
+  variables:
+    ARCH: "x86"
+
+deploy_x64:
+  stage: deploy
+  tags: ["runner:windows-docker", "windowsversion:1809"]
+  needs: ["build_binaries_x64"]
+  rules:
+    !reference [.manual]
+  script:
+    - $hash = (git rev-parse --short HEAD 2> $null)
+    - Write-Host "Uploading zip python-windows-${PYTHON_VERSION}-${hash}-x64.zip"
+    - Invoke-Expression "aws s3 cp --only-show-errors --region us-east-1 --sse AES256 --acl public-read build-out/python-windows-${PYTHON_VERSION}-x64.zip s3://dd-agent-omnibus/python-windows-${PYTHON_VERSION}-${hash}-x64.zip"
+
+deploy_x86:
+  stage: deploy
+  tags: ["runner:windows-docker", "windowsversion:1809"]
+  needs: ["build_binaries_x86"]
+  rules:
+    !reference [.manual]
+  script:
+    - $hash = (git rev-parse --short HEAD 2> $null)
+    - Write-Host "Uploading zip python-windows-${PYTHON_VERSION}-${hash}-x86.zip"
+    - Invoke-Expression "aws s3 cp --only-show-errors --region us-east-1 --sse AES256 --acl public-read build-out/python-windows-${PYTHON_VERSION}-x86.zip s3://dd-agent-omnibus/python-windows-${PYTHON_VERSION}-${hash}-x86.zip"
