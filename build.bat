@@ -39,11 +39,10 @@ REM with libraries needing pythoncore to be built
 call .\PCBuild\build.bat --no-tkinter -e -c Release -p %platf%
 
 REM Copy DLLs directory
-dir %builddir%
 mkdir %outdir%\DLLs
 copy %builddir%\*.pyd %outdir%\DLLs || exit /b 4
 copy %builddir%\libcrypto-1_1.dll %outdir%\DLLs || exit /b 5
-copy %builddir%\libffi-7.dll %outdir%\DLLs || exit /b 6
+copy %builddir%\libffi-8.dll %outdir%\DLLs || exit /b 6
 copy %builddir%\libssl-1_1.dll %outdir%\DLLs || exit /b 7
 copy %builddir%\sqlite3.dll %outdir%\DLLs || exit /b 8
 
