@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  PYTHON_VERSION: "3.9.16"
+  PYTHON_VERSION: "3.9.17"
 
 .manual:
   - when: manual
