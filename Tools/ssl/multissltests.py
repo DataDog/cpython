@@ -49,7 +49,7 @@ OPENSSL_OLD_VERSIONS = [
 ]
 
 OPENSSL_RECENT_VERSIONS = [
-    "1.1.1t",
+    "1.1.1u",
     "3.0.2"
 ]
 
