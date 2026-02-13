@@ -4,7 +4,7 @@
 # We pin Sphinx and all of its dependencies to ensure a consistent environment.
 
 blurb
-python-docs-theme>=2022.1
+python-docs-theme>=2025.5
 
 # Generated from:
 #     pip install "Sphinx~=7.2.6"
