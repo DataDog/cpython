@@ -27,13 +27,13 @@ jobs:
       OPTIONS: ${{ inputs.options }}
       SUPPRESSIONS_PATH: ${{ inputs.suppressions_path }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       with:
         persist-credentials: false
     - name: Runner image version
       run: echo "IMAGE_VERSION=${ImageVersion}" >> "$GITHUB_ENV"
     - name: Restore config.cache
-      uses: actions/cache@v4
+      uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
       with:
         path: config.cache
         key: ${{ github.job }}-${{ runner.os }}-${{ env.IMAGE_VERSION }}-${{ inputs.config_hash }}
@@ -59,7 +59,7 @@ jobs:
       run: |
         echo "PATH=/usr/lib/ccache:$PATH" >> "$GITHUB_ENV"
     - name: Configure ccache action
-      uses: hendrikmuhs/ccache-action@v1.2
+      uses: hendrikmuhs/ccache-action@5ebbd400eff9e74630f759d94ddd7b6c26299639 # v1.2.20
       with:
         save: ${{ github.event_name == 'push' }}
         max-size: "200M"
@@ -76,7 +76,7 @@ jobs:
       run: find "${GITHUB_WORKSPACE}" -name 'tsan_log.*' | xargs head -n 1000
     - name: Archive TSAN logs
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
       with:
         name: ${{ inputs.tsan_logs_artifact_name }}
         path: tsan_log.*

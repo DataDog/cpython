@@ -60,7 +60,7 @@ jobs:
     steps:
     - run: >-
         echo '${{ github.event_name }}'
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       with:
         persist-credentials: false
     - name: Check for source changes
@@ -118,7 +118,7 @@ jobs:
     - name: Get a list of the changed documentation-related files
       if: github.event_name == 'pull_request'
       id: changed-docs-files
-      uses: Ana06/get-changed-files@v2.3.0
+      uses: Ana06/get-changed-files@25f79e676e7ea1868813e21465014798211fad8c # v2.3.0
       with:
         filter: |
           Doc/**
@@ -139,7 +139,7 @@ jobs:
     - name: Get a list of the MSI installer-related files
       if: github.event_name == 'pull_request'
       id: changed-win-msi-files
-      uses: Ana06/get-changed-files@v2.3.0
+      uses: Ana06/get-changed-files@25f79e676e7ea1868813e21465014798211fad8c # v2.3.0
       with:
         filter: |
           Tools/msi/**
