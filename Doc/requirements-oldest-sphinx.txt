@@ -17,13 +17,13 @@ Babel==2.16.0
 certifi==2024.8.30
 charset-normalizer==3.4.0
 docutils==0.20.1
-idna==3.10
+idna==3.18
 imagesize==1.4.1
-Jinja2==3.1.4
+Jinja2==3.1.6
 MarkupSafe==3.0.1
 packaging==24.1
-Pygments==2.18.0
-requests==2.32.3
+Pygments==2.20.0
+requests==2.34.2
 snowballstemmer==2.2.0
 Sphinx==7.2.6
 sphinxcontrib-applehelp==2.0.0
@@ -32,4 +32,4 @@ sphinxcontrib-htmlhelp==2.1.0
 sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==2.0.0
 sphinxcontrib-serializinghtml==2.0.0
-urllib3==2.2.3
+urllib3==2.7.0
